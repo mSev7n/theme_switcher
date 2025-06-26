@@ -33,6 +33,7 @@ toggleBtn.addEventListener('click', () => {
 });
 
 // Check for system theme changes while the page is open (For Mac Users macOS "Auto" mode switch)
+// will modify this code later that's why it's commented
 /*
 
 systemPrefersDark.addEventListener('change', (e) => {
