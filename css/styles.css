@@ -8,8 +8,7 @@
     --btn-bg: #f0f0f0;
     --btn-text: #111111;
   }
-  
-  /* Dark Theme Overriders */
+   /* Dark Theme Overriders */
   [data-theme="dark"] {
     --bg-color: #121212;
     --text-color: #f9f9f9;
@@ -17,4 +16,25 @@
     --btn-bg: #1e1e1e;
     --btn-text: #f9f9f9;
   }
-  
+   /* Base Styles */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+   body {
+    font-family: system-ui, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+   /* Main Content */
+   main {
+    text-align: center;
+    max-width: 500px;
+  }
