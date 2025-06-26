@@ -16,3 +16,30 @@ function applyTheme(theme) {
  );
 }
 
+// On page load: use saved theme or system preference
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme) {
+ applyTheme(savedTheme);
+} else {
+ applyTheme(systemPrefersDark.matches ? 'dark' : 'light');
+}
+
+// Toggle theme on button click
+toggleBtn.addEventListener('click', () => {
+ const currentTheme = document.documentElement.getAttribute('data-theme');
+ const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+ applyTheme(newTheme);
+});
+
+// Check for system theme changes while the page is open (For Mac Users macOS "Auto" mode switch)
+/*
+
+systemPrefersDark.addEventListener('change', (e) => {
+ if (!localStorage.getItem('theme')) {
+   applyTheme(e.matches ? 'dark' : 'light');
+ }
+});
+
+*/
+
