@@ -51,8 +51,20 @@
    border: none;
    border-radius: 8px;
    cursor: pointer;
-   transition: background-color 0.3s ease, color 0.3s ease;
+   transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
  }
+
+ /* Hover effect */
+#theme-toggle:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+ 
   /* Accessibility: Focus style for keyboard users*/
  #theme-toggle:focus {
    outline: 2px solid var(--highlight-color);
