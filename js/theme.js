@@ -6,15 +6,22 @@ const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
 // Function to apply a theme and update storage + accessibility label
 function applyTheme(theme) {
- document.documentElement.setAttribute('data-theme', theme);
- localStorage.setItem('theme', theme);
-
- // Update ARIA label for screen reader users
- toggleBtn.setAttribute(
-   'aria-label',
-   `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`
- );
-}
+    // 1. Flip the data-attribute so the CSS variables change
+    document.documentElement.setAttribute('data-theme', theme);
+  
+    // 2. Remember the user’s choice
+    localStorage.setItem('theme', theme);
+  
+    // 3. Update the aria-label for screen readers
+    const opposite = theme === 'dark' ? 'light' : 'dark';
+    toggleBtn.setAttribute('aria-label', `Switch to ${opposite} mode`);
+  
+    // 4. Swap the icon + text inside the button
+    //    🌙 shows when we’re in LIGHT mode (so user can switch to dark)
+    //    ☀️ shows when we’re in DARK mode  (so user can switch to light)
+    toggleBtn.textContent =
+      (theme === 'dark' ? '☀️' : '🌙') + ' Toggle Theme';
+  }
 
 // On page load: use saved theme or system preference
 const savedTheme = localStorage.getItem('theme');
