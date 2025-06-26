@@ -32,11 +32,14 @@
    justify-content: center;
    align-items: center;
    padding: 2rem;
+   line-height: 1.6;
  }
   /* Main Content */
   main {
    text-align: center;
-   max-width: 500px;
+   max-width: 480px;
+   width: 100%;
+   padding: 1rem;
  }
   /* Theme Toggle Button */
   #theme-toggle {
@@ -71,5 +74,16 @@
   
   .animate-in {
     animation: fadeInFromLeft 0.6s ease-out both;
+  }
+  
+  @media (max-width: 360px) {
+    body {
+      padding: 1rem;
+    }
+  
+    #theme-toggle {
+      font-size: 0.95rem;
+      padding: 0.6rem 1.2rem;
+    }
   }
   
