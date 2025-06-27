@@ -34,6 +34,7 @@ While the live site on GitHub Pages uses `localStorage`, the full version suppor
 | Method | Endpoint         | Description
 ____________________________________________________________
 | GET    | /api/settings    | Returns saved theme preference |
+
 | PUT    | /api/settings    | Updates user's theme           |
 
 ### 🛠 To test the backend locally:
