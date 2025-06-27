@@ -1,55 +1,69 @@
-// Select the toggle button by its ID
+// << mSeven.dev >>
+
+// 1. Select the toggle button
 const toggleBtn = document.getElementById('theme-toggle');
 
-// Detect system preference (dark or light)
+// 2. Detect system preference (dark or light)
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-// Function to apply a theme and update storage + accessibility label
+// 3. Determine whether we're running locally (API available) or on GitHub Pages (static)
+const API =
+  window.location.hostname === 'localhost' ? 'http://localhost:4000/api/settings' : null;
+
+// 4. Apply the given theme to the document + UI
 function applyTheme(theme) {
-    // 1. Flip the data-attribute so the CSS variables change
-    document.documentElement.setAttribute('data-theme', theme);
-  
-    // 2. Remember the user’s choice
-    localStorage.setItem('theme', theme);
-  
-    // 3. Update the aria-label for screen readers
-    const opposite = theme === 'dark' ? 'light' : 'dark';
-    toggleBtn.setAttribute('aria-label', `Switch to ${opposite} mode`);
-  
-    // 4. Swap the icon + text inside the button
-    //    🌙 shows when we’re in LIGHT mode (so user can switch to dark)
-    //    ☀️ shows when we’re in DARK mode  (so user can switch to light)
-    toggleBtn.textContent =
-      (theme === 'dark' ? '☀️' : '🌙') + ' Toggle Theme';
-  }
+  // A. Set the data-attribute for CSS variables
+  document.documentElement.setAttribute('data-theme', theme);
 
-// On page load: use saved theme or system preference
-const savedTheme = localStorage.getItem('theme');
+  // B. Store theme in localStorage as fallback
+  localStorage.setItem('theme', theme);
 
-if (savedTheme) {
- applyTheme(savedTheme);
-} else {
- applyTheme(systemPrefersDark.matches ? 'dark' : 'light');
+  // C. Update accessibility: screen readers know the next mode
+  const opposite = theme === 'dark' ? 'light' : 'dark';
+  toggleBtn.setAttribute('aria-label', `Switch to ${opposite} mode`);
+
+  // D. Update button icon and label
+  toggleBtn.textContent = (theme === 'dark' ? '☀️' : '🌙') + ' Toggle Theme';
 }
 
-// Toggle theme on button click
+// 5. On page load — use backend if possible, fallback to localStorage/system
+if (API) {
+  fetch(API)
+    .then(res => res.json())
+    .then(data => applyTheme(data.theme))
+    .catch(() => {
+      // If backend fails, use saved or system preference
+      const fallback = localStorage.getItem('theme') || (systemPrefersDark.matches ? 'dark' : 'light');
+      applyTheme(fallback);
+    });
+} else {
+  const savedTheme = localStorage.getItem('theme');
+  applyTheme(savedTheme || (systemPrefersDark.matches ? 'dark' : 'light'));
+}
+
+// 6. On toggle click — flip theme, update UI, save to API/localStorage
 toggleBtn.addEventListener('click', () => {
- const currentTheme = document.documentElement.getAttribute('data-theme');
- const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
- applyTheme(newTheme);
+  const current = document.documentElement.getAttribute('data-theme');
+  const newTheme = current === 'dark' ? 'light' : 'dark';
+
+  applyTheme(newTheme);
+
+  // Save new preference to backend
+  if (API) {
+    fetch(API, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ theme: newTheme })
+    }).catch(() => null); // ignore errors
+  }
 });
 
-// Check for system theme changes while the page is open (For Mac Users macOS "Auto" mode switch)
-// will modify this code later that's why it's commented
+// Check for system theme changes live (macOS auto mode)
+// will modify this later that's why it  is commented
 /*
-
 systemPrefersDark.addEventListener('change', (e) => {
- if (!localStorage.getItem('theme')) {
-   applyTheme(e.matches ? 'dark' : 'light');
- }
+  if (!localStorage.getItem('theme')) {
+    applyTheme(e.matches ? 'dark' : 'light');
+  }
 });
-
 */
-// // << mSeven.dev >>
-
-
