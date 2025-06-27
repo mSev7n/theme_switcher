@@ -42,11 +42,12 @@ ____________________________________________________________
 2. Run:
 
 ```
-cd backend
+git clone https://github.com/your-username/theme_switcher.git
+cd theme_switcher/backend
 npm install
 node server.js
 ```
----
+Then open index.html in your browser; the theme is now saved in backend/settings.json.
 
 ## ♿ Accessibility Compliance Report
 
