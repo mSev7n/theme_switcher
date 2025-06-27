@@ -24,6 +24,28 @@ https://msev7n.github.io/theme_switcher/
 - **CSS3** with custom properties  
 - **JavaScript ES6** (no frameworks)
 
+
+## 🧪 Backend Simulation
+
+This project includes a mock backend built with Express to simulate real-world theme persistence.
+
+While the live site on GitHub Pages uses `localStorage`, the full version supports:
+
+| Method | Endpoint         | Description
+____________________________________________________________
+| GET    | /api/settings    | Returns saved theme preference |
+| PUT    | /api/settings    | Updates user's theme           |
+
+### 🛠 To test the backend locally:
+
+1. Clone the repo
+2. Run:
+
+```
+cd backend
+npm install
+node server.js
+```
 ---
 
 ## ♿ Accessibility Compliance Report
